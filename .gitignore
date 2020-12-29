@@ -1,0 +1,8 @@
+
+*.egg-info
+.idea/
+.venv/
+__pycache__/
+.media/
+
+**/local_settings.py
