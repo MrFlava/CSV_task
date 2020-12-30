@@ -62,9 +62,9 @@ class Column(models.Model):
 
     name = models.CharField(max_length=120)
     type = models.CharField(max_length=120, choices=DataType.choices())
-    order = models.PositiveIntegerField()
-    from_range = models.PositiveIntegerField(null=True)
-    to_range = models.PositiveIntegerField(null=True)
+    order = models.PositiveIntegerField(default=0)
+    from_range = models.PositiveIntegerField(null=True, blank=True)
+    to_range = models.PositiveIntegerField(null=True, blank=True)
     schema = models.ForeignKey(Schema, on_delete=models.CASCADE)
 
     objects = models.Manager()

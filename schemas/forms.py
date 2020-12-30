@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import StringCharacterType, ColumnSeparatorType, Schema
+from .models import StringCharacterType, ColumnSeparatorType, Schema, Column
 
 
 class SchemaForm(forms.ModelForm):
@@ -12,13 +12,6 @@ class SchemaForm(forms.ModelForm):
 
 class ColumnForm(forms.ModelForm):
     class Meta:
-        model = Schema
-        fields = ["name", "type", "order"]
-        labels = {'name': "Name", "type": "Type", "order": "Order"}
-
-
-class ColumnRangeForm(forms.ModelForm):
-    class Meta:
-        model = Schema
-        fields = ["name", "type", "order", "from_range", "to_range"]
-        labels = {'name': "Name", "type": "Type", "order": "Order", "from_range": "From range", "to_range": "To range"}
+        model = Column
+        fields = ["name", "type", "order", "from_range", "to_range", "schema"]
+        labels = {'name': "Name", "type": "Type", "order": "Order", "from_range": "From range", "to_range": "To range", "schema": "Schema"}

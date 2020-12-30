@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<body>
+{% if user.is_authenticated %}
+    <p>Hello, {{ user.get_username }}.</p>
+    <a href="/logout">logout</a>
+
+    <h1>Schema columns</h1>
+    <form action="" method="POST">
+
+     {% csrf_token %}
+     {{ form.as_p }}
+
+    </form>
+    <h1>Schema</h1>
+    <!--<div id="columns-wrapper">-->
+        <!--<button id="add-columns" class="btn btn-primary">Add column</button>-->
+
+
+    <!--</div>-->
+
+     <button type="submit" class="btn btn-primary">Submit</button>
+
+
+{% endif %}
+
+</body>
+
+</html>

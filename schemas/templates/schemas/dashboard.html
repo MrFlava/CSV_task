@@ -9,16 +9,38 @@
     <p>Hello, {{ user.get_username }}.</p>
     <a href="/logout">logout</a>
 
-    <h1>Data schemas</h1>
     <a href="/new_schema">New schema</a>
+    {% if schemas %}
 
-    {% for schema in schemas %}
-        <p>{{ schema.pk }} | {{ schema.name }} | {{ schema.last_modified }}</p>
-        <a href="/schema/{{ schema.pk }}/edit">Edit scheme</a>
-        <a href="/schema/{{ schema.pk }}/delete">Delete scheme</a>
+        <h1>Data schemas</h1>
 
 
-    {% endfor %}
+        {% for schema in schemas %}
+
+            <p>{{ schema.pk }} | {{ schema.name }} | {{ schema.last_modified }}</p>
+            <a href="/schema/{{ schema.pk }}/edit">Edit scheme</a>
+            <a href="/schema/{{ schema.pk }}/columns">Scheme columns</a>
+            <a href="/schema/{{ schema.pk }}/delete">Delete scheme</a>
+
+        {% endfor %}
+
+    {% endif %}
+
+    <a href="columns/new_column">New column</a>
+    {% if columns %}
+
+        <h1>Schema columns</h1>
+
+        {% for column in columns %}
+
+            <p>{{ column.name }} | {{ column.type }} |  {{ column.order }} </p>
+            <a href="columns/{{ column.pk }}/edit">Edit column</a>
+            <a href="columns/{{ column.pk }}/delete">Delete column</a>
+
+        {% endfor %}
+
+    {% endif %}
+
 {% endif %}
 </body>
 </html>
