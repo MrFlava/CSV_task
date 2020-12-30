@@ -33,6 +33,7 @@ class Schema(models.Model):
     name = models.CharField(max_length=120)
     column_separator = models.CharField(max_length=120, choices=ColumnSeparatorType.choices())
     string_character = models.CharField(max_length=120, choices=StringCharacterType.choices())
+    last_modified = models.DateTimeField(default=datetime.datetime.now())
 
     objects = models.Manager()
 

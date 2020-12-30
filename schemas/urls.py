@@ -20,5 +20,8 @@ from . import views
 
 urlpatterns = [
     path('', views.DashboardView, name="schema-dashboard"),
+    path('new_schema', views.NewSchemaView, name="new-schema"),
+    path('schema/<int:schema_id>/edit', views.UpdateSchemaView, name="update-schema"),
+    path('schema/<int:schema_id>/delete', views.DeleteSchemaView, name="delete-schema"),
 
 ]
