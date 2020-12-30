@@ -28,6 +28,23 @@ class StringCharacterType(enum.Enum):
         return tuple((i.name, i.value) for i in cls)
 
 
+class DataType(enum.Enum):
+
+    FULL_NAME = "Full  name"
+    JOB = "Job"
+    DOMAIN_NAME = "Domain name"
+    PHONE_NUMBER = "Phone number"
+    COMPANY_NAME = "Phone number"
+    TEXT = "Text"
+    INTEGER = "Integer"
+    ADDRESS = "Address"
+    DATE = "Date"
+
+    @classmethod
+    def choices(cls):
+        return tuple((i.name, i.value) for i in cls)
+
+
 class Schema(models.Model):
 
     name = models.CharField(max_length=120)
@@ -39,3 +56,18 @@ class Schema(models.Model):
 
     def __str__(self):
         return f"Schema #{self.pk}"
+
+
+class Column(models.Model):
+
+    name = models.CharField(max_length=120)
+    type = models.CharField(max_length=120, choices=DataType.choices())
+    order = models.PositiveIntegerField()
+    from_range = models.PositiveIntegerField(null=True)
+    to_range = models.PositiveIntegerField(null=True)
+    schema = models.ForeignKey(Schema, on_delete=models.CASCADE)
+
+    objects = models.Manager()
+
+    def __str__(self):
+        return f"Column #{self.pk}"
