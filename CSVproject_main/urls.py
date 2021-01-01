@@ -17,8 +17,6 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth.views import LoginView, LogoutView
 
-# app_name = 'csv_project'
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', LoginView.as_view(template_name='auth/login.html'), name='login'),

@@ -1,20 +1,37 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <link href="{% static 'css/main.css' %}" rel="stylesheet" />
     <title>Login</title>
+
 </head>
-<body>
+<body class="logout-page">
+	<section class="h-100">
+		<div class="container h-100">
+			<div class="row justify-content-md-center h-100">
+				<div class="card-wrapper">
+                    <div class="brand">
 
-    {% block title %}Logged out{% endblock %}
-    {% block content %}
-    <h1>Logged out</h1>
-    <p>
-        You have been successfully logged out.
-        <hr>
-        You can <a href="{% url 'login' %}">log-in again</a>.
-    </p>
-    {% endblock %}
+                    </div>
+					<div class="card fat">
+						<div class="card-body">
+							<h2 class="card-title text-center">Logged out</h2>
+                            <p>
+                                You have been successfully logged out.
+                                You can <a href="{% url 'login' %}">log-in again</a>.
+                            </p>
+						</div>
+					</div>
+                    <div class="footer">
 
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 </body>
 </html>
