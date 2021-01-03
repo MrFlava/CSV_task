@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Dashboard</title>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <h2 class="navbar-brand font-weight-bold">FakeCSV</h2>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Schemas <span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+     <ul class="navbar-nav mr-auto my-2 my-lg-0">
+       <li class="nav-item">
+           <a class="nav-link disabled" href="#">Hello, <span class="font-weight-bold">{{ user.get_username }}</span>.</a>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" href="/logout">Logout</a>
+       </li>
+    </ul>
+
+  </div>
+</nav>
+    <h1>Data sets</h1>
+
+        <a href="/csv/download" download>Download</a>
+
+</body>
+</html>

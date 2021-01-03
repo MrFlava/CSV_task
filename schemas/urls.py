@@ -25,4 +25,5 @@ urlpatterns = [
     path('schema/<int:schema_id>/delete', views.DeleteSchemaView, name="delete-schema"),
     path('schema/<int:schema_id>/generate_data', views.GenerateDataView, name="generate-data"),
     path('schema/<int:schema_id>/columns/new_column', views.SchemaForm, name="new-column"),
+    path('csv/download', views.download_csv, name='download_csv'),
 ]

@@ -1,3 +1,4 @@
+import os
 import datetime
 from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 from django.forms import inlineformset_factory
@@ -112,8 +113,23 @@ def DeleteSchemaView(request, schema_id):
 
 def GenerateDataView(request, schema_id):
     if request.user.is_authenticated:
-        context = {}
+        context = {
+
+        }
         csv_generator.delay(schema_id)
-        return HttpResponse(content=context)
+        return render(request=request, template_name="schemas/generated_data.html", context=context)
     else:
         return HttpResponseRedirect("/login/")
+
+
+def download_csv(request):
+    print('Download .csv...')
+    # Full path of file
+    file_path = 'CSVproject_main/media/data.csv'
+    if os.path.exists(file_path):
+        with open(file_path, 'rb') as fh:
+            response = HttpResponse(fh.read(), content_type="file/force_download")
+            response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
+            return response
+
+
