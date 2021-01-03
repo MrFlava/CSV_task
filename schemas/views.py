@@ -1,11 +1,9 @@
-import csv
-import random
 import datetime
-from faker import Faker
 from django.shortcuts import render, HttpResponseRedirect, HttpResponse
+from django.forms import inlineformset_factory
 
-from .models import Schema, Column, DataType
-from .forms import SchemaForm, ColumnForm
+from .models import Schema, Column
+from .forms import SchemaForm
 from .tasks import csv_generator
 
 # Create your views here.
@@ -29,23 +27,70 @@ def DashboardView(request):
 def NewSchemaView(request):
     if request.user.is_authenticated:
 
+        schema = Schema()
+        schema_form = SchemaForm(instance=schema)
+        ColumnInlineFormSet = inlineformset_factory(Schema, Column, fields=("name",  "type", "order",
+                                                                            "from_range", "to_range"), extra=1)
+        formset = ColumnInlineFormSet(instance=schema)
+
         if request.method == "POST":
+            schema_form = SchemaForm(request.POST)
 
-            form = SchemaForm(request.POST)
+            formset = ColumnInlineFormSet(request.POST, request.FILES)
 
-            if form.is_valid():
-                form.save()
-                return HttpResponseRedirect("/")
+            if schema_form.is_valid():
+                created_schema = schema_form.save(commit=False)
+                formset = ColumnInlineFormSet(request.POST, request.FILES, instance=created_schema)
 
-        else:
-            form = SchemaForm()
+                if formset.is_valid():
+                    created_schema.save()
+                    formset.save()
+                    # return HttpResponseRedirect(created_schema.get_absolute_url())
+                    return HttpResponseRedirect("/")
 
-        context = {'form': form}
+        context = {
+             "schema_form": schema_form,
+             "formset": formset,
+        }
 
         return render(request=request, template_name="schemas/schema.html", context=context)
 
     else:
         return HttpResponseRedirect("login/")
+
+
+def UpdateSchemaView(request, schema_id):
+    if request.user.is_authenticated:
+        schema = Schema.objects.get(pk=schema_id)
+        schema_form = SchemaForm(instance=schema)
+        ColumnInlineFormSet = inlineformset_factory(Schema, Column, fields=("name", "type", "order",
+                                                                            "from_range", "to_range"), extra=1)
+        formset = ColumnInlineFormSet(instance=schema)
+
+        if request.method == "POST":
+            schema_form = SchemaForm(request.POST, instance=schema)
+
+            formset = ColumnInlineFormSet(request.POST, request.FILES)
+
+            if schema_form.is_valid():
+                created_schema = schema_form.save(commit=False)
+                formset = ColumnInlineFormSet(request.POST, request.FILES, instance=created_schema)
+
+                if formset.is_valid():
+                    created_schema.save()
+                    formset.save()
+                    # return HttpResponseRedirect(created_schema.get_absolute_url())
+                    return HttpResponseRedirect("/")
+
+        context = {
+             "schema_form": schema_form,
+             "formset": formset,
+        }
+
+        return render(request=request, template_name="schemas/schema.html", context=context)
+
+    else:
+        return HttpResponseRedirect("/login/")
 
 
 def DeleteSchemaView(request, schema_id):
@@ -63,88 +108,6 @@ def DeleteSchemaView(request, schema_id):
 
     else:
         return HttpResponseRedirect("/login/")
-
-
-def UpdateSchemaView(request, schema_id):
-    if request.user.is_authenticated:
-
-        schema = Schema.objects.get(pk=schema_id)
-        schema.last_modified = datetime.datetime.now()
-
-        form = SchemaForm(request.POST or None, instance=schema)
-
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect("/")
-
-        context = {'form': form}
-
-        return render(request=request, template_name="schemas/schema.html", context=context)
-
-    else:
-        return HttpResponseRedirect("/login/")
-
-
-def ColumnsDashboardView(request, schema_id):
-
-    columns = Column.objects.filter(schema_id=schema_id)
-
-    context = {
-        'schema_id': schema_id,
-        'columns': columns
-    }
-
-    return render(request=request, template_name="schemas/dashboard.html", context=context)
-
-
-def NewColumnView(request, schema_id):
-
-    if request.method == "POST":
-
-        column = Column.objects.create(schema_id=schema_id)
-
-        form = ColumnForm(request.POST, instance=column)
-
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect("/")
-
-    else:
-        form = ColumnForm()
-
-    context = {
-        'form': form
-    }
-
-    return render(request=request, template_name="schemas/column.html", context=context)
-
-
-def DeleteColumnView(request, column_id, schema_id):
-
-    try:
-        column = Column.objects.get(pk=column_id)
-
-    except Column.DoesNotExist:
-
-        return HttpResponseRedirect("/")
-
-    column.delete()
-    return HttpResponseRedirect("/")
-
-
-def UpdateColumnView(request, column_id, schema_id):
-
-    column = Column.objects.get(pk=column_id)
-
-    form = ColumnForm(request.POST or None, instance=column)
-
-    if form.is_valid():
-        form.save()
-        return HttpResponseRedirect("/")
-
-    context = {'form': form}
-
-    return render(request=request, template_name="schemas/column.html", context=context)
 
 
 def GenerateDataView(request, schema_id):

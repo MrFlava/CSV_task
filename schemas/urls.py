@@ -23,10 +23,6 @@ urlpatterns = [
     path('new_schema', views.NewSchemaView, name="new-schema"),
     path('schema/<int:schema_id>/edit', views.UpdateSchemaView, name="update-schema"),
     path('schema/<int:schema_id>/delete', views.DeleteSchemaView, name="delete-schema"),
-    path('schema/<int:schema_id>/columns', views.ColumnsDashboardView, name="columns-dashboard"),
     path('schema/<int:schema_id>/generate_data', views.GenerateDataView, name="generate-data"),
-    path('schema/<int:schema_id>/columns/new_column', views.NewColumnView, name="new-column"),
-    path('schema/<int:schema_id>/columns/<int:column_id>/delete', views.DeleteColumnView, name="delete-column"),
-    path('schema/<int:schema_id>/columns/<int:column_id>/edit', views.UpdateColumnView, name="edit-column"),
-
+    path('schema/<int:schema_id>/columns/new_column', views.SchemaForm, name="new-column"),
 ]
