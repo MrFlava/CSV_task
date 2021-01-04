@@ -1,4 +1,5 @@
 import os
+import csv
 from faker import Faker
 import datetime
 import random
@@ -115,12 +116,11 @@ def DeleteSchemaView(request, schema_id):
         return HttpResponseRedirect("/login/")
 
 
-def GenerateDataView(request, schema_id):
+def GenerateDataView(request, schema_id, rows):
     if request.user.is_authenticated:
-        context = {
 
-        }
-        csv_generator.delay(schema_id)
+        context = {}
+        csv_generator.delay(schema_id, rows)
         return render(request=request, template_name="schemas/generated_data.html", context=context)
     else:
         return HttpResponseRedirect("/login/")
