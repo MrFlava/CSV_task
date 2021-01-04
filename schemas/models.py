@@ -30,10 +30,9 @@ class StringCharacterType(enum.Enum):
 
 class DataType(enum.Enum):
 
-    FULL_NAME = "Full  name"
+    FULL_NAME = "Full name"
     JOB = "Job"
     EMAIL = "Email"
-    DOMAIN_NAME = "Domain name"
     PHONE_NUMBER = "Phone number"
     COMPANY_NAME = "Company name"
     TEXT = "Text"

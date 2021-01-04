@@ -1,5 +1,7 @@
 import os
+from faker import Faker
 import datetime
+import random
 from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 from django.forms import inlineformset_factory
 
@@ -53,6 +55,7 @@ def NewSchemaView(request):
              "schema_form": schema_form,
              "formset": formset,
         }
+        print(formset)
 
         return render(request=request, template_name="schemas/schema.html", context=context)
 
@@ -87,6 +90,7 @@ def UpdateSchemaView(request, schema_id):
              "schema_form": schema_form,
              "formset": formset,
         }
+        print(formset)
 
         return render(request=request, template_name="schemas/schema.html", context=context)
 

@@ -9,27 +9,15 @@ def generate_csv_data(schema):
     fake = Faker()
     columns = Column.objects.filter(schema_id=schema)
     column_rows = [{column.name: None for column in columns} for _ in range(10)]
-
+    row_types_methods = {'PHONE_NUMBER': 'fake.phone_number()', 'FULL_NAME': 'fake.name()', 'JOB': 'fake.job()',
+                         'EMAIL': 'fake.email()', 'COMPANY_NAME': 'fake.company()', 'TEXT': 'fake.text()',
+                         'INTEGER': 'random.randrange(column.from_range, column.to_range)', 'ADDRESS': 'fake.address()',
+                         'DATE': 'fake.date()'}
     for column in columns:
         for i in range(0, len(column_rows)):
-            if column.type == 'PHONE_NUMBER':
-                column_rows[i].update({column.name: fake.phone_number()})
-            if column.type == 'FULL_NAME':
-                column_rows[i].update({column.name: fake.name()})
-            if column.type == 'JOB':
-                column_rows[i].update({column.name: fake.job()})
-            if column.type == 'EMAIL':
-                column_rows[i].update({column.name: fake.email()})
-            if column.type == 'COMPANY_NAME':
-                column_rows[i].update({column.name: fake.company()})
-            if column.type == 'TEXT':
-                column_rows[i].update({column.name: fake.text()})
-            if column.type == 'INTEGER':
-                column_rows[i].update({column.name: random.randrange(column.from_range, column.to_range)})
-            if column.type == 'ADDRESS':
-                column_rows[i].update({column.name: fake.address()})
-            if column.type == 'DATE':
-                column_rows[i].update({column.name: fake.date()})
+            if column.type in row_types_methods:
+                column_rows[i].update({column.name: eval(row_types_methods[column.type])})
+
     csv_file = "CSVproject_main/media/data.csv"
 
     try:

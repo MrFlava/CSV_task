@@ -32,29 +32,99 @@
 
     <h1>New Schema</h1>
     <form action="" method="POST" class="form">
-         {% csrf_token %}
+        {% csrf_token %}
+        <div class="float-right">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+        <label for="schemaName">Name</label>
         <div class="form-group">
-            <input  type="text" class="form-control w-25" name="{{ schema_form.name.name }}">
+            <input id="schemaName" type="text" class="form-control w-25" name="{{ schema_form.name.name }}">
         </div>
 
+        <label for="schemaColumnSeparator">Column separator</label>
         <div class="form-group">
-            {{ schema_form.column_separator }}
+            <select id="schemaColumnSeparator" name="{{ schema_form.column_separator.name }}" class="custom-select w-25">
+                 <option value="TAB">Tab</option>
+                 <option value="SEMICOLON">Semicolon (;)</option>
+                 <option value="COMMA">Comma (,)</option>
+                 <option value="SPACE">Space</option>
+
+            </select>
         </div>
 
+        <label for="schemaStringCharacter">String character</label>
         <div class="form-group">
-            {{ schema_form.string_character }}
+            <select id="schemaStringCharacter" name="{{ schema_form.string_character.name }}" class="custom-select w-25">
+                 <option value="DOUBLE_QUOTE">Double-quote (")</option>
+                 <option value="COLONEL">Single-quote (')</option>
+            </select>
         </div>
 
         <h1>Schema columns</h1>
-        {{ formset.as_p }}
+        <table>
+            <tbody>
+            {{ formset.management_form }}
+                {% for form in formset %}
 
+                <tr>
+                    <th>
+                        <label for="{{ form.name.id }}">Column name</label>
+                        <div class="form-group">
+                            <input type="text" class="form-input" name="{{ form.name.name }}" value="{{ form.name.value | default_if_none:''}}" id="{{ form.name.id }}">
+                        </div>
+                    </th>
+                    <th>
+                        <label for="{{ form.type.id }}">Column type</label>
+                        <div class="form-group">
+                            <select class="custom-select"  name="{{ form.type.name }}" id="{{ form.type.id }}">
+                                 <option value="FULL_NAME">Full name</option>
+                                 <option value="JOB">Job</option>
+                                 <option value="EMAIL">Email</option>
+                                 <option value="PHONE_NUMBER">Phone number</option>
+                                 <option value="COMPANY_NAME">Company name</option>
+                                 <option value="TEXT">Text</option>
+                                 <option value="INTEGER">Integer</option>
+                                 <option value="ADDRESS">Address</option>
+                                 <option value="DATE">Date</option>
+                            </select>
+                        </div>
+                    </th>
 
-        <div class="form-group">
-            <input  type="text" class="form-control w-25" name="{{ schema_form.name.name }}">
-        </div>
+                    {% if form.from_range %}
+                    <th>
+                        <label for="{{ form.from_range.id }}">From</label>
+                        <div class="form-group">
+                            <input type="number" class="form-input" name="{{ form.from_range.name }}" value="{{ form.from_range.value }}" min="0" id="{{ form.from_range.id }}">
+                        </div>
+                    </th>
+                    {% endif %}
 
+                    {% if form.to_range %}
+                    <th>
+                        <label for="{{ form.to_range.id }}">To</label>
+                        <div class="form-group">
+                            <input type="number" class="form-input" name="{{ form.to_range.name }}" value="{{ form.to_range.value }}" min="0" id="{{ form.to_range.id }}">
+                        </div>
+                    </th>
+                    {% endif %}
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+                    <th>
+                        <label for="{{ form.order.id }}">Order</label>
+                        <div class="form-group">
+                            <input type="number" class="form-input" name="{{ form.order.name }}" value="{{ form.order.value }}" min="0" id="{{ form.order.id }}">
+                        </div>
+                    </th>
+
+                    <th>
+
+                    </th>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+        </table>
     </form>
 </body>
 
