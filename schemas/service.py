@@ -18,12 +18,11 @@ def generate_csv_data(schema, rows):
             if column.type in row_types_methods:
                 column_rows[i].update({column.name: eval(row_types_methods[column.type])})
 
-    csv_file = "CSVproject_main/media/data.csv"
-    print(len(column_rows))
+    csv_file = f"CSVproject_main/media/{columns.schema.name}.csv"
     try:
         with open(csv_file, 'w') as csvfile:
             # csv.writer(csvfile, delimiter=' ', quotechar=',', quoting=csv.QUOTE_MINIMAL)
-            writer = csv.DictWriter(csvfile, fieldnames=[column.name for column in columns])
+            writer = csv.DictWriter(csvfile, quotechar=',', fieldnames=[column.name for column in columns])
             writer.writeheader()
             for data in column_rows:
                 writer.writerow(data)

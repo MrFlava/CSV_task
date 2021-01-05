@@ -13,8 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
 
 from . import views
 
@@ -23,7 +22,8 @@ urlpatterns = [
     path('new_schema', views.NewSchemaView, name="new-schema"),
     path('schema/<int:schema_id>/edit', views.UpdateSchemaView, name="update-schema"),
     path('schema/<int:schema_id>/delete', views.DeleteSchemaView, name="delete-schema"),
-    path('schema/<int:schema_id>/<int:rows>/generate_data', views.GenerateDataView, name="generate-data"),
+    path('schema/<int:schema_id>/data_sets', views.DataSetsView, name="data-sets"),
+    path('schema/<int:schema_id>/data_sets/generate_data/rows/<int:rows>', views.GenerateDataView, name="generate-data"),
     path('schema/<int:schema_id>/columns/new_column', views.SchemaForm, name="new-column"),
-    path('csv/download', views.download_csv, name='download_csv'),
+    path('csv/download/<str:csv_file>', views.download_csv, name='download_csv'),
 ]

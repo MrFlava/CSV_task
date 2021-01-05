@@ -49,15 +49,12 @@ def NewSchemaView(request):
                 if formset.is_valid():
                     created_schema.save()
                     formset.save()
-                    # return HttpResponseRedirect(created_schema.get_absolute_url())
-                    return HttpResponseRedirect("/")
+                    return HttpResponseRedirect(f"/schema/{created_schema.pk}/edit")
 
         context = {
              "schema_form": schema_form,
              "formset": formset,
         }
-        print(formset)
-
         return render(request=request, template_name="schemas/schema.html", context=context)
 
     else:
@@ -84,14 +81,12 @@ def UpdateSchemaView(request, schema_id):
                 if formset.is_valid():
                     created_schema.save()
                     formset.save()
-                    # return HttpResponseRedirect(created_schema.get_absolute_url())
-                    return HttpResponseRedirect("/")
+                    return HttpResponseRedirect(f"/schema/{created_schema.pk}/edit")
 
         context = {
              "schema_form": schema_form,
              "formset": formset,
         }
-        print(formset)
 
         return render(request=request, template_name="schemas/schema.html", context=context)
 
@@ -116,24 +111,31 @@ def DeleteSchemaView(request, schema_id):
         return HttpResponseRedirect("/login/")
 
 
-def GenerateDataView(request, schema_id, rows):
+def DataSetsView(request, schema_id):
     if request.user.is_authenticated:
+        csv_files = os.listdir(path="CSVproject_main/media/")
 
-        context = {}
-        csv_generator.delay(schema_id, rows)
-        return render(request=request, template_name="schemas/generated_data.html", context=context)
+        context = {
+            'csv_files': csv_files
+        }
+        return render(request=request, template_name="schemas/data_sets.html", context=context)
     else:
         return HttpResponseRedirect("/login/")
 
 
-def download_csv(request):
-    print('Download .csv...')
-    # Full path of file
-    file_path = 'CSVproject_main/media/data.csv'
+def GenerateDataView(request, schema_id, rows):
+    if request.user.is_authenticated:
+            csv_generator.delay(schema_id, rows)
+            return HttpResponseRedirect(f"/schema/{schema_id}/data_sets")
+    else:
+        return HttpResponseRedirect("/login/")
+
+
+def download_csv(request, csv_file):
+    file_path = f'CSVproject_main/media/{csv_file}'
     if os.path.exists(file_path):
         with open(file_path, 'rb') as fh:
             response = HttpResponse(fh.read(), content_type="file/force_download")
             response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
             return response
-
 

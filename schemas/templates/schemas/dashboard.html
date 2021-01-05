@@ -36,7 +36,6 @@
     <h1 class="my-2 font-weight-bold">Data schemas</h1>
     <div class="form-group w-25 float-right">
         <a class="btn btn-success w-20" href="/new_schema" role="button">New schema</a>
-        <input type="number" class="form-input" name="rows" value=0>
 
     </div>
     <table class="table table-bordered w-50">
@@ -56,7 +55,7 @@
               <td>{{ schema.last_modified }}</td>
               <td>
                   <a href="/schema/{{ schema.pk }}/edit">Edit scheme</a>
-                  <a href="/schema/{{ schema.pk }}/generate_data">Generate data</a>
+                  <a href="/schema/{{ schema.pk }}/data_sets">Data sets</a>
                   <a href="/schema/{{ schema.pk }}/delete">Delete scheme</a>
               </td>
             </tr>

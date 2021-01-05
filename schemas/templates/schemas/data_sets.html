@@ -31,9 +31,27 @@
 
   </div>
 </nav>
+
+    <div class="float-right">
+        <input id="rows-input" type="number" class="form-input" min="0"/>
+        <a id="link" onclick="addURL()" href="data_sets/generate_data/rows/" class="btn btn-success">Generate data</a>
+    </div>
+
+
     <h1>Data sets</h1>
+        {% for csv_file in csv_files %}
+            <a  href="/csv/download/{{csv_file}}" download>Download</a>
+        {% endfor %}
 
-        <a href="/csv/download" download>Download</a>
+    {% block javascript %}
+    <script>
+        function addURL(){
+            let rowsInput = document.getElementById('rows-input').value.trim();
+            let link = document.getElementById('link');
+            link.href = "data_sets/generate_data/rows/" + rowsInput;
+        }
 
+    </script>
+    {% endblock javascript %}
 </body>
 </html>
