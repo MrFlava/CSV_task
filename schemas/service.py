@@ -21,11 +21,9 @@ def generate_csv_data(schema, rows):
     csv_file = f"CSVproject_main/media/{columns.schema.name}.csv"
     try:
         with open(csv_file, 'w') as csvfile:
-            # csv.writer(csvfile, delimiter=' ', quotechar=',', quoting=csv.QUOTE_MINIMAL)
-            writer = csv.DictWriter(csvfile, quotechar=',', fieldnames=[column.name for column in columns])
+            writer = csv.DictWriter(csvfile, fieldnames=[column.name for column in columns])
             writer.writeheader()
             for data in column_rows:
                 writer.writerow(data)
-            # csv.writer(writer, delimiter='', quotechar=',', quoting=csv.QUOTE_ALL)
     except IOError:
         print("I/O error")

@@ -1,4 +1,5 @@
 import os
+import time
 import csv
 from faker import Faker
 import datetime
@@ -113,10 +114,15 @@ def DeleteSchemaView(request, schema_id):
 
 def DataSetsView(request, schema_id):
     if request.user.is_authenticated:
-        csv_files = os.listdir(path="CSVproject_main/media/")
+        files = os.listdir(path="CSVproject_main/media/")
+        csv_files = []
+        for csv_file in files:
+            csv_files.append({"name": csv_file,
+                              "status": "ready",
+                              "created": f"%s" % time.ctime(os.path.getctime(f"CSVproject_main/media/{csv_file}"))})
 
         context = {
-            'csv_files': csv_files
+            'csv_files': enumerate(csv_files, start=1)
         }
         return render(request=request, template_name="schemas/data_sets.html", context=context)
     else:

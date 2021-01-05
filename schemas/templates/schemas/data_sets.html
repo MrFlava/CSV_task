@@ -39,9 +39,28 @@
 
 
     <h1>Data sets</h1>
-        {% for csv_file in csv_files %}
-            <a  href="/csv/download/{{csv_file}}" download>Download</a>
+    <table class="table table-bordered w-50">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Created</th>
+          <th scope="col">Status</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for count, csv_file in csv_files %}
+            <tr>
+              <th scope="row">{{ count }}</th>
+              <td>{{csv_file.created}}</td>
+              <td>{{csv_file.status}}</td>
+              <td>
+                  <a  href="/csv/download/{{csv_file.name}}" download>Download</a>
+              </td>
+            </tr>
         {% endfor %}
+      </tbody>
+    </table>
 
     {% block javascript %}
     <script>
