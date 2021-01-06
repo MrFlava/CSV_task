@@ -16,7 +16,7 @@ def generate_csv_data(schema, rows):
                          'INTEGER': 'random.randrange(column.from_range, column.to_range)', 'ADDRESS': 'fake.address()',
                          'DATE': 'fake.date()'}
     column_separators = {'TAB':  '  ', 'SEMICOLON':  ';', 'COMMA':  ',', 'SPACE':  ' '}
-    string_characters  = {'DOUBLE_QUOTE': '"', 'COLONEL': "'"}
+    string_characters = {'DOUBLE_QUOTE': '"', 'COLONEL': "'"}
 
     for column in columns:
         for i in range(0, len(column_rows)):
@@ -35,6 +35,11 @@ def generate_csv_data(schema, rows):
             for data in column_rows:
                 for key, value in data.items():
                     data[key] = str(data[key]).replace(' ', f'{column_separators[schema.column_separator]}')
+                    if string_characters[schema.string_character] is '"':
+                        data[key] = f'"{data[key]}"'
+                    else:
+                        data[key] = f"'{data[key]}'"
+
                 writer.writerow(data)
 
     except IOError:
