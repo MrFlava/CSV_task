@@ -7,7 +7,7 @@ import random
 from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 from django.forms import inlineformset_factory
 
-from .models import Schema, Column
+from .models import Schema, Column, DataType, ColumnSeparatorType, StringCharacterType
 from .forms import SchemaForm
 from .tasks import csv_generator
 
@@ -55,7 +55,11 @@ def NewSchemaView(request):
         context = {
              "schema_form": schema_form,
              "formset": formset,
+             "data_type": DataType,
+             "column_separator_types": ColumnSeparatorType.choices(),
+             "string_character_types": StringCharacterType.choices()
         }
+
         return render(request=request, template_name="schemas/schema.html", context=context)
 
     else:
@@ -87,6 +91,8 @@ def UpdateSchemaView(request, schema_id):
         context = {
              "schema_form": schema_form,
              "formset": formset,
+             "column_separator_types": ColumnSeparatorType.choices(),
+             "string_character_types": StringCharacterType.choices()
         }
 
         return render(request=request, template_name="schemas/schema.html", context=context)

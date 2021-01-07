@@ -36,31 +36,33 @@
         <div class="float-right">
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
-        {{schema_form.as_p}}
+        <label for="schemaName">Name</label>
+        <div class="form-group">
+            <input id="schemaName" type="text" class="form-control w-25" value="{{ schema_form.name.value | default_if_none:''}}" name="{{ schema_form.name.name }}">
+        </div>
+
+        <label for="schemaColumnSeparator">Column separator</label>
+        <div class="form-group">
+            <select id="schemaColumnSeparator" name="{{ schema_form.column_separator.name }}" class="custom-select w-25">
+                {% for key, value in column_separator_types %}
+                    <option value="{{key}}" {% if key == schema_form.column_separator.value %}selected="selected"{% endif %}>
+                        {{value|capfirst}}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <label for="schemaStringCharacter">String character</label>
+        <div class="form-group">
+            <select id="schemaStringCharacter" name="{{ schema_form.string_character.name }}" class="custom-select w-25">
+                {% for key, value in string_character_types %}
+                    <option value="{{key}}" {% if key == schema_form.string_character.value %}selected="selected"{% endif %}>
+                        {{value|capfirst}}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
         {{formset.as_p}}
-        <!--<label for="schemaName">Name</label>-->
-        <!--<div class="form-group">-->
-            <!--<input id="schemaName" type="text" class="form-control w-25" value="{{ schema_form.name.value | default_if_none:''}}" name="{{ schema_form.name.name }}">-->
-        <!--</div>-->
-
-        <!--<label for="schemaColumnSeparator">Column separator</label>-->
-        <!--<div class="form-group">-->
-            <!--<select id="schemaColumnSeparator" name="{{ schema_form.column_separator.name }}" class="custom-select w-25">-->
-                 <!--<option value="TAB">Tab</option>-->
-                 <!--<option value="SEMICOLON">Semicolon (;)</option>-->
-                 <!--<option value="COMMA">Comma (,)</option>-->
-                 <!--<option value="SPACE">Space</option>-->
-
-            <!--</select>-->
-        <!--</div>-->
-
-        <!--<label for="schemaStringCharacter">String character</label>-->
-        <!--<div class="form-group">-->
-            <!--<select id="schemaStringCharacter" name="{{ schema_form.string_character.name }}" class="custom-select w-25">-->
-                 <!--<option value="DOUBLE_QUOTE">Double-quote (")</option>-->
-                 <!--<option value="COLONEL">Single-quote (')</option>-->
-            <!--</select>-->
-        <!--</div>-->
 
         <!--<h1>Schema columns</h1>-->
         <!--<table>-->
