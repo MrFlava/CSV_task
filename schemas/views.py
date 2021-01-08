@@ -4,8 +4,11 @@ import csv
 from faker import Faker
 import datetime
 import random
-from django.shortcuts import render, HttpResponseRedirect, HttpResponse
+from django.shortcuts import render, HttpResponseRedirect, HttpResponse, redirect
+from django.views.generic.edit import CreateView, UpdateView
 from django.forms import inlineformset_factory
+from django.db import transaction
+from django.urls import  reverse_lazy
 
 from .models import Schema, Column, DataType, ColumnSeparatorType, StringCharacterType
 from .forms import SchemaForm
@@ -34,8 +37,8 @@ def NewSchemaView(request):
 
         schema = Schema()
         schema_form = SchemaForm(instance=schema)
-        ColumnInlineFormSet = inlineformset_factory(Schema, Column, fields=("name",  "type", "order",
-                                                                            "from_range", "to_range"), extra=1)
+        ColumnInlineFormSet = inlineformset_factory(Schema, Column, fields=("name", "type", "from_range",
+                                                                            "to_range", "order"), extra=1)
         formset = ColumnInlineFormSet(instance=schema)
 
         if request.method == "POST":
@@ -50,16 +53,16 @@ def NewSchemaView(request):
                 if formset.is_valid():
                     created_schema.save()
                     formset.save()
-                    return HttpResponseRedirect(f"/schema/{created_schema.pk}/edit")
+                    return redirect(f"/schema/{created_schema.pk}/edit")
+                    # return HttpResponseRedirect(f"/schema/{created_schema.pk}/edit")
 
         context = {
              "schema_form": schema_form,
              "formset": formset,
-             "data_type": DataType,
+             "data_type": DataType.choices(),
              "column_separator_types": ColumnSeparatorType.choices(),
-             "string_character_types": StringCharacterType.choices()
+             "string_character_types": StringCharacterType.choices(),
         }
-
         return render(request=request, template_name="schemas/schema.html", context=context)
 
     else:
@@ -68,10 +71,11 @@ def NewSchemaView(request):
 
 def UpdateSchemaView(request, schema_id):
     if request.user.is_authenticated:
+
         schema = Schema.objects.get(pk=schema_id)
         schema_form = SchemaForm(instance=schema)
-        ColumnInlineFormSet = inlineformset_factory(Schema, Column, fields=("name", "type", "order",
-                                                                            "from_range", "to_range"), extra=1)
+        ColumnInlineFormSet = inlineformset_factory(Schema, Column, fields=("name", "type", "from_range",
+                                                                            "to_range", "order"), extra=1)
         formset = ColumnInlineFormSet(instance=schema)
 
         if request.method == "POST":
@@ -86,15 +90,15 @@ def UpdateSchemaView(request, schema_id):
                 if formset.is_valid():
                     created_schema.save()
                     formset.save()
-                    return HttpResponseRedirect(f"/schema/{created_schema.pk}/edit")
+                    return redirect(f"/schema/{created_schema.pk}/edit")
 
         context = {
              "schema_form": schema_form,
              "formset": formset,
+             "data_types": DataType.choices(),
              "column_separator_types": ColumnSeparatorType.choices(),
              "string_character_types": StringCharacterType.choices()
         }
-
         return render(request=request, template_name="schemas/schema.html", context=context)
 
     else:

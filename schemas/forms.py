@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import StringCharacterType, ColumnSeparatorType, Schema, Column
+from .models import Schema
 
 
 class SchemaForm(forms.ModelForm):
