@@ -12,7 +12,7 @@ from .tasks import csv_generator
 
 
 @login_required
-def DashboardView(request):
+def dashboard_view(request):
 
     schemas = Schema.objects.all()
 
@@ -23,7 +23,7 @@ def DashboardView(request):
 
 
 @login_required
-def NewSchemaView(request):
+def new_schema_view(request):
 
     schema = Schema()
     schema_form = SchemaForm(instance=schema)
@@ -63,7 +63,7 @@ def NewSchemaView(request):
 
 
 @login_required
-def UpdateSchemaView(request, schema_id):
+def update_schema_view(request, schema_id):
 
     schema = Schema.objects.get(pk=schema_id)
     schema_form = SchemaForm(instance=schema)
@@ -102,7 +102,7 @@ def UpdateSchemaView(request, schema_id):
 
 
 @login_required
-def DeleteSchemaView(request, schema_id):
+def delete_schema_view(request, schema_id):
 
     try:
         schema = Schema.objects.get(pk=schema_id)
@@ -116,7 +116,7 @@ def DeleteSchemaView(request, schema_id):
 
 
 @login_required
-def DataSetsView(request, schema_id):
+def data_sets_view(request, schema_id):
     files = os.listdir(path="CSVproject_main/media/")
     csv_files = []
     for csv_file in files:
@@ -136,7 +136,7 @@ def DataSetsView(request, schema_id):
 
 
 @login_required
-def GenerateDataView(request, schema_id, rows):
+def generate_data_view(request, schema_id, rows):
     csv_generator.delay(schema_id, rows)
     return HttpResponseRedirect(f"/schema/{schema_id}/data_sets")
 
