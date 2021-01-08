@@ -35,6 +35,7 @@ class DataType(enum.Enum):
     EMAIL = "Email"
     PHONE_NUMBER = "Phone number"
     COMPANY_NAME = "Company name"
+    DOMAIN_NAME = "Domain name"
     TEXT = "Text"
     INTEGER = "Integer"
     ADDRESS = "Address"
