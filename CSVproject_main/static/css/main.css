@@ -15,9 +15,11 @@ body.login-page, body.logout-page {
 	position: relative;
 	z-index: 1;
 }
-
+.card-body {
+    padding: 3.25rem;
+}
 .login-page .card-wrapper, .logout-page .card-wrapper {
-	width: 400px;
+	width: 500px;
 }
 
 .login-page .card, .logout-page .card {

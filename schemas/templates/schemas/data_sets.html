@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>Dashboard</title>
+    <title>Data sets</title>
 </head>
 <body>
 
@@ -20,7 +20,7 @@
         <a class="nav-link" href="#">Schemas <span class="sr-only">(current)</span></a>
       </li>
     </ul>
-     <ul class="navbar-nav mr-auto my-2 my-lg-0">
+     <ul class="navbar-nav mr-5 my-2 my-lg-0">
        <li class="nav-item">
            <a class="nav-link disabled" href="#">Hello, <span class="font-weight-bold">{{ user.get_username }}</span>.</a>
        </li>
@@ -32,13 +32,23 @@
   </div>
 </nav>
 
-    <div class="float-right">
-        <input id="rows-input" type="number" class="form-input" min="0"/>
-        <a id="link" onclick="addURL()" href="data_sets/generate_data/rows/" class="btn btn-success">Generate data</a>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-3">
+                <h1 class="my-3 ml-4 font-weight-bold">Data sets</h1>
+
+            </div>
+            <div class="col-9">
+                <label for="rows-input">Rows:</label>
+                <input id="rows-input" type="number" class="form-input" min="0"/>
+                <a id="link" onclick="addURL()" href="data_sets/generate_data/rows/" class="my-4 btn btn-success w-20">
+                    Generate data
+                </a>
+
+            </div>
+        </div>
     </div>
-
-
-    <h1>Data sets</h1>
     <table class="table table-bordered w-50">
       <thead>
         <tr>
@@ -53,7 +63,7 @@
             <tr>
               <th scope="row">{{ count }}</th>
               <td>{{csv_file.created}}</td>
-              <td>{{csv_file.status}}</td>
+                <td><a href="#" class="btn btn-success">{{csv_file.status}}</a></td>
               <td>
                   <a  href="/csv/download/{{csv_file.name}}" download>Download</a>
               </td>
