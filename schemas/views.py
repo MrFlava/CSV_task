@@ -117,17 +117,21 @@ def delete_schema_view(request, schema_id):
 
 @login_required
 def data_sets_view(request, schema_id):
+    schema = Schema.objects.get(pk=schema_id)
+
     files = os.listdir(path="CSVproject_main/media/")
     csv_files = []
+
     for csv_file in files:
-        csv_files.append(
-            {
-                "name": csv_file,
-                "status": "ready",
-                "created": f"%s"
-                % time.ctime(os.path.getctime(f"CSVproject_main/media/{csv_file}")),
-            }
-        )
+        if schema.name in csv_file:
+            csv_files.append(
+                {
+                    "name": csv_file,
+                    "status": "ready",
+                    "created": f"%s"
+                    % time.ctime(os.path.getctime(f"CSVproject_main/media/{csv_file}")),
+                }
+            )
 
     context = {"csv_files": enumerate(csv_files, start=1)}
     return render(
