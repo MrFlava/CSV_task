@@ -1,3 +1,4 @@
+import os
 import csv
 import random
 import datetime
@@ -30,9 +31,12 @@ def generate_csv_data(schema, rows):
         for i in range(0, len(column_rows)):
             column_rows[i].update({column.name: eval(row_types_methods[column.type])})
 
-    csv_file = f"CSVproject_main/media/{schema.name}.csv"
     try:
-        with open(csv_file, "w") as csvfile:
+        i = 0
+        while os.path.exists(f"CSVproject_main/media/{schema.name}_{i}.csv"):
+            i += 1
+
+        with open(f"CSVproject_main/media/{schema.name}_{i}.csv", "w") as csvfile:
             writer = csv.DictWriter(
                 csvfile,
                 quoting=csv.QUOTE_ALL,
