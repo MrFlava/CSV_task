@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ')#xga1n2vx6d0bbxri+n=$=73@ot==)f^hk+#*%u2^g8cfn-g('
+SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -131,8 +131,8 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'CSVproject_main/static')]
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 # AWS settings
-# AWS_ACCESS_KEY_ID = 'AKIA465LVRS4ZISCLOWB'
-# AWS_SECRET_ACCESS_KEY = '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'
+# AWS_ACCESS_KEY_ID = ''
+# AWS_SECRET_ACCESS_KEY = ''
 # AWS_STORAGE_BUCKET_NAME = 'csv-task-bucket'
 # AWS_S3_CUSTOM_DOMAIN = '%s.s3.us-east-2.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 # AWS_S3_REGION_NAME = 'us-east-2'
