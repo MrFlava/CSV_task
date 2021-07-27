@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'schemas',
     'storages',
-    'queued_storage'
+    'queued_storage',
+    'crispy_forms'
 ]
 
 MIDDLEWARE = [
@@ -129,6 +130,8 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.normpath(os.path.join(BASE_DIR, 'staticfiles'))
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'CSVproject_main/static')]
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # AWS settings
 # AWS_ACCESS_KEY_ID = ''

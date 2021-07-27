@@ -1,4 +1,6 @@
 {% load static %}
+{% load crispy_forms_tags %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,25 +41,26 @@
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                     <h1>New Schema</h1>
-                    {{schema_form.as_p}}
+                    <div class="col-md-4">
+                    {{schema_form|crispy}}
+                    </div>
                     <h1>Schema columns</h1>
-                     {{ formset.management_form}}
-                     {% for form in formset.forms %}
-                         {{form}}
-                         <hr>
-                     {% endfor %}
-<!--                     {{ formset.management_form}}-->
-<!--                     {% for form in formset.forms %}-->
-<!--                         {% for field in form %}-->
-<!--                             <div class="different style">-->
-<!--                                {{ field.label_tag }}:-->
-<!--                                <p class="another different style">{{ field }}</p>-->
-<!--                             </div>-->
-<!--                         {% endfor %}-->
-<!--                         <hr>-->
-<!--                     {% endfor %}-->
-
-
+                    <div class="col-8">
+                        {{ formset.management_form}}
+                        <table class="table table-borderless">
+                         {% for form in formset.forms %}
+                             <tbody>
+                                <tr>
+                                    {% for field in form %}
+                                        <td>
+                                            {{ field|as_crispy_field}}
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                             </tbody>
+                         {% endfor %}
+                        </table>
+                    </div>
                 </form>
             </div>
         </div>
