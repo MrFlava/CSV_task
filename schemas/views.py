@@ -59,6 +59,7 @@ def new_schema_view(request):
         "column_separator_types": ColumnSeparatorType.choices(),
         "string_character_types": StringCharacterType.choices(),
     }
+    # print(context.get('formset'))
     return render(request=request, template_name="schemas/schema.html", context=context)
 
 
@@ -98,6 +99,7 @@ def update_schema_view(request, schema_id):
         "column_separator_types": ColumnSeparatorType.choices(),
         "string_character_types": StringCharacterType.choices(),
     }
+    # print(context.get('formset'))
     return render(request=request, template_name="schemas/schema.html", context=context)
 
 

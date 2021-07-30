@@ -56,6 +56,7 @@
                          {% for form in formset.forms %}
                                 <tr>
                                     {% for field in form %}
+                                        {{field.html_name}}
                                         {% if not 'DELETE' in field.html_name %}
                                             <td>
                                                 {{ field|as_crispy_field}}
@@ -79,6 +80,22 @@
             </div>
         </div>
     </div>
+
+    {% block javascript %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+    $(function() {
+
+      $("[id$='from_range']").hide();
+      $("[id$='to_range']").hide();
+
+      if ( $( "select[name$='-type']" ).val() == 'TEXT' || $( "select[name$='-type']" ).val() == 'INTEGER' ) {
+            $("[id$='from_range']").show();
+            $("[id$='to_range']").show();
+      }
+    });
+    </script>
+    {% endblock javascript %}
 
 </body>
 
