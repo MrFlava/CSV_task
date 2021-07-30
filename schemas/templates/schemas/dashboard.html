@@ -58,11 +58,12 @@
         {% for schema in schemas %}
             <tr>
               <th scope="row">{{ schema.pk }}</th>
-              <td>{{ schema.name }}</td>
+              <td>
+                     <a href="/schema/{{ schema.pk }}/data_sets">{{ schema.name }}</a>
+              </td>
               <td>{{ schema.last_modified }}</td>
               <td>
                   <a href="/schema/{{ schema.pk }}/edit">Edit scheme</a>
-                  <a href="/schema/{{ schema.pk }}/data_sets">Data sets</a>
                   <a  class="text-danger" href="/schema/{{ schema.pk }}/delete">Delete scheme</a>
               </td>
             </tr>
