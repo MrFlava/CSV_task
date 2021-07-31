@@ -32,24 +32,33 @@
   </div>
 </nav>
 
-
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-3">
-                <h1 class="my-3 ml-4 font-weight-bold">Data sets</h1>
-
-            </div>
-            <div class="col-9">
-                <label for="rows-input">Rows:</label>
-                <input id="rows-input" type="number" class="form-input" min="0"/>
-                <a id="link" onclick="addURL()" href="data_sets/generate_data/rows/" class="my-4 btn btn-success w-20">
-                    Generate data
-                </a>
-
-            </div>
+    <div class="form-row">
+        <div class="col-2">
+            <h2 class="my-3 ml-5 font-weight-bold">Data sets</h2>
+        </div>
+        <div class="col-2">
+            <label for="rows-input">Rows:</label>
+        </div>
+        <div class="col-4">
+                <input id="rows-input" type="number" class="form-control col-lg-3" min="0"/>
+        </div>
+        <div class="col-1">
+            <a id="link" onclick="addURL()" href="data_sets/generate_data/rows/" class="my-3 btn btn-success w-20">
+                Generate data
+            </a>
         </div>
     </div>
-    <table class="table table-bordered w-50">
+
+    <div class="form-inline">
+        <div class="form-group mb-2">
+
+        </div>
+        <div class="col-9">
+
+        </div>
+
+    </div>
+    <table class="table table-bordered ml-5 w-50">
       <thead>
         <tr>
           <th scope="col">#</th>
