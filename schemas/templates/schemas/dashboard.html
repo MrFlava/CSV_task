@@ -35,11 +35,11 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-5">
-                <h1 class="my-3 ml-4 font-weight-bold">Data schemas</h1>
+                <h2 class="my-3 ml-4 font-weight-bold">Data schemas</h2>
 
             </div>
             <div class="col-7">
-                        <a class="my-4 btn btn-success w-20" href="/new_schema" role="button">New schema</a>
+                        <a class="my-4 ml-5 btn btn-success w-20" href="/new_schema" role="button">New schema</a>
 
             </div>
         </div>
@@ -61,10 +61,10 @@
               <td>
                      <a href="/schema/{{ schema.pk }}/data_sets">{{ schema.name }}</a>
               </td>
-              <td>{{ schema.last_modified }}</td>
+              <td>{{ schema.last_modified|date:"M d, Y" }}</td>
               <td>
-                  <a href="/schema/{{ schema.pk }}/edit">Edit scheme</a>
-                  <a  class="text-danger" href="/schema/{{ schema.pk }}/delete">Delete scheme</a>
+                  <a href="/schema/{{ schema.pk }}/edit">Edit scheme</a> &nbsp; &nbsp;
+                  <a  class="text-danger" href="/schema/{{ schema.pk }}/delete">Delete</a>
               </td>
             </tr>
         {% endfor %}
