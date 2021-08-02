@@ -8,56 +8,47 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <h2 class="navbar-brand font-weight-bold">FakeCSV</h2>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <h2 class="navbar-brand font-weight-bold">FakeCSV</h2>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Schemas <span class="sr-only">(current)</span></a>
-      </li>
-    </ul>
-     <ul class="navbar-nav mr-5 my-2 my-lg-0">
-       <li class="nav-item">
-           <a class="nav-link disabled" href="#">Hello, <span class="font-weight-bold">{{ user.get_username }}</span>.</a>
-       </li>
-       <li class="nav-item">
-         <a class="nav-link" href="/logout">Logout</a>
-       </li>
-    </ul>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Schemas <span class="sr-only">(current)</span></a>
+          </li>
+        </ul>
+         <ul class="navbar-nav mr-5 my-2 my-lg-0">
+           <li class="nav-item">
+               <a class="nav-link disabled" href="#">Hello, <span class="font-weight-bold">{{ user.get_username }}</span>.</a>
+           </li>
+           <li class="nav-item">
+             <a class="nav-link" href="/logout">Logout</a>
+           </li>
+        </ul>
 
-  </div>
-</nav>
+      </div>
+    </nav>
 
-    <div class="form-row">
-        <div class="col-2">
-            <h2 class="my-3 ml-5 font-weight-bold">Data sets</h2>
-        </div>
-        <div class="col-2">
-            <label for="rows-input">Rows:</label>
-        </div>
-        <div class="col-4">
-                <input id="rows-input" type="number" class="form-control col-lg-3" min="0"/>
-        </div>
-        <div class="col-1">
-            <a id="link" onclick="addURL()" href="data_sets/generate_data/rows/" class="my-3 btn btn-success w-20">
-                Generate data
-            </a>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-4">
+                <h2 class="my-3 ml-4 font-weight-bold">Data sets</h2>
+            </div>
+
+            <div class="d-flex my-3">
+                <label for="rows-input" class="p-2">Rows:</label>
+                <input id="rows-input" type="number" class="form-control col-lg-2 p-2" min="0"/>
+                <a id="link" onclick="addURL()" href="data_sets/generate_data/rows/" class="my-1 ml-5 btn btn-success p-2">
+                    Generate data
+                </a>
+
+            </div>
         </div>
     </div>
 
-    <div class="form-inline">
-        <div class="form-group mb-2">
-
-        </div>
-        <div class="col-9">
-
-        </div>
-
-    </div>
     <table class="table table-bordered ml-5 w-50">
       <thead>
         <tr>
