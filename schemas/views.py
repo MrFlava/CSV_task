@@ -1,5 +1,6 @@
 import os
 import time
+import boto3
 from django.shortcuts import render, HttpResponseRedirect, HttpResponse, redirect
 from django.forms import inlineformset_factory
 from django.contrib.auth.decorators import login_required
@@ -7,13 +8,14 @@ from django.contrib.auth.decorators import login_required
 from .models import Schema, Column, DataType, ColumnSeparatorType, StringCharacterType
 from .forms import SchemaForm
 from .tasks import csv_generator
+from CSVproject_main.settings import AWS_STORAGE_BUCKET_NAME, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
+
 
 # Create your views here.
 
 
 @login_required
 def dashboard_view(request):
-
     schemas = Schema.objects.all()
 
     context = {"schemas": schemas}
@@ -24,7 +26,6 @@ def dashboard_view(request):
 
 @login_required
 def new_schema_view(request):
-
     schema = Schema()
     schema_form = SchemaForm(instance=schema)
     ColumnInlineFormSet = inlineformset_factory(
@@ -65,7 +66,6 @@ def new_schema_view(request):
 
 @login_required
 def update_schema_view(request, schema_id):
-
     schema = Schema.objects.get(pk=schema_id)
     schema_form = SchemaForm(instance=schema)
     ColumnInlineFormSet = inlineformset_factory(
@@ -105,7 +105,6 @@ def update_schema_view(request, schema_id):
 
 @login_required
 def delete_schema_view(request, schema_id):
-
     try:
         schema = Schema.objects.get(pk=schema_id)
 
@@ -120,21 +119,22 @@ def delete_schema_view(request, schema_id):
 @login_required
 def data_sets_view(request, schema_id):
     schema = Schema.objects.get(pk=schema_id)
-
-    files = os.listdir(path="CSVproject_main/media/")
+    s3_client = boto3.client('s3',
+                             aws_access_key_id=AWS_ACCESS_KEY_ID,
+                             aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
     csv_files = []
 
-    for csv_file in files:
-        if schema.name in csv_file:
+    for csv_file in s3_client.list_objects(Bucket=AWS_STORAGE_BUCKET_NAME)['Contents']:
+
+        if schema.name in csv_file['Key']:
             csv_files.append(
                 {
-                    "name": csv_file,
                     "status": "ready",
                     "created": f"%s"
-                    % time.ctime(os.path.getctime(f"CSVproject_main/media/{csv_file}")),
+                               % csv_file['LastModified'],
+                    "public_link": ''
                 }
             )
-
     context = {"csv_files": enumerate(csv_files, start=1)}
     return render(
         request=request, template_name="schemas/data_sets.html", context=context

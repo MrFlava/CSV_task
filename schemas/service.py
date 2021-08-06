@@ -3,11 +3,14 @@ import csv
 import random
 import datetime
 from faker import Faker
+
 from .models import Column, Schema
+from CSVproject_main.storage_backends import MediaStorage
 
 
 def generate_csv_data(schema, rows):
     fake = Faker()
+    media_storage = MediaStorage()
     columns = Column.objects.filter(schema_id=schema)
     schema = Schema.objects.get(pk=schema)
     column_rows = [{column.name: None for column in columns} for _ in range(rows)]
@@ -33,10 +36,10 @@ def generate_csv_data(schema, rows):
 
     try:
         i = 0
-        while os.path.exists(f"CSVproject_main/media/{schema.name}_{i}.csv"):
+        while media_storage.exists(f"{schema.name}_{i}.csv"):
             i += 1
 
-        with open(f"CSVproject_main/media/{schema.name}_{i}.csv", "w") as csvfile:
+        with media_storage.open(f"{schema.name}_{i}.csv", "w") as csvfile:
             writer = csv.DictWriter(
                 csvfile,
                 quoting=csv.QUOTE_ALL,
@@ -58,6 +61,5 @@ def generate_csv_data(schema, rows):
                         data[key] = f"'{data[key]}'"
 
                 writer.writerow(data)
-
     except IOError:
         print("I/O error")

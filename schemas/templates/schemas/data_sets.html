@@ -65,7 +65,7 @@
               <td>{{csv_file.created}}</td>
                 <td><a href="#" class="btn btn-success">{{csv_file.status}}</a></td>
               <td>
-                  <a  href="/csv/download/{{csv_file.name}}" download>Download</a>
+                  <a  href="{{csv_file.public_link}}" download>Download</a>
               </td>
             </tr>
         {% endfor %}
