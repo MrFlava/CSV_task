@@ -132,7 +132,7 @@ def data_sets_view(request, schema_id):
                     "status": "ready",
                     "created": f"%s"
                                % csv_file['LastModified'],
-                    "public_link": ''
+                    "public_link": f'https://csv-task-bucket.s3.us-east-2.amazonaws.com/{csv_file["Key"]}'
                 }
             )
     context = {"csv_files": enumerate(csv_files, start=1)}
